@@ -10,10 +10,14 @@ public class Vertex{
 	public LinkedList<Vertex> neighbors;
 	
 	public Vertex(){
-		this.data = 1;
 		this.predecessor = null;
 		this.currentCost = 0;
 		this.neighbors = new LinkedList<Vertex>();
+	}
+	
+	public Vertex(int id, int chave){
+		this.index = id;
+		this.currentCost = chave;
 	}
 	
 	public Vertex[] getNeighbors(){
