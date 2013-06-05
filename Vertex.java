@@ -2,11 +2,17 @@ import java.util.LinkedList;
 
 
 public class Vertex{
+	public int index;
 	public int data;
+	public Vertex predecessor;
+	public int currentCost;
+	public boolean visited;
 	public LinkedList<Vertex> neighbors;
 	
 	public Vertex(){
 		this.data = 1;
+		this.predecessor = null;
+		this.currentCost = 0;
 		this.neighbors = new LinkedList<Vertex>();
 	}
 	
