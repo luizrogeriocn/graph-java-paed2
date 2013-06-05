@@ -1,4 +1,5 @@
 import java.util.Queue;
+import java.util.Stack;
 import java.util.Vector;
 import java.util.LinkedList;
 
@@ -33,7 +34,7 @@ public class GraphAsList {
 		vertices[a].neighbors.add(vertices[b]);
 	}	
 	
-	public void bfs(int a, int b){
+	public void bfs(int a){
 		
 		Queue<Vertex> queue = new LinkedList<Vertex>();
 		queue.add(vertices[a]);
@@ -49,6 +50,27 @@ public class GraphAsList {
 					vertex.neighbors.get(i).predecessor = vertex;
 					vertex.visited = true;
 					System.out.println("vertice adicionado a fila: " + vertex.neighbors.get(i).index + " i:"+i);
+				}
+			}	
+		}	
+	}
+	
+	public void dfs(int a){
+		
+		Stack<Vertex> stack = new Stack<Vertex>();
+		stack.push(vertices[a]);
+		
+		vertices[a].predecessor = vertices[a];
+		
+		while(!stack.isEmpty()){
+			Vertex vertex = stack.pop();
+			
+			for(int i = 0; i < vertex.neighbors.size(); i++){
+				if( !vertex.neighbors.get(i).visited && !stack.contains(vertex.neighbors.get(i))){
+					stack.push(vertex.neighbors.get(i));
+					vertex.neighbors.get(i).predecessor = vertex;
+					vertex.visited = true;
+					System.out.println("vertice adicionado a pilha: " + vertex.neighbors.get(i).index + " i:"+i);
 				}
 			}	
 		}	
@@ -79,7 +101,8 @@ public class GraphAsList {
 		for(int i = 0; i < v.length; i++){
 			System.out.println(v[i].data);
 		}
-		grafo.bfs(0, 4);
+		//grafo.bfs(0);
+		grafo.dfs(0);
 		grafo.printPath(grafo.vertices[4]);
 
 	}
