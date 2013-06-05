@@ -12,18 +12,22 @@ public class DisjointSet {
 		}		
 	}
 	
-	public boolean compare(Vertex a, Vertex b){
-		if(a.predecessor == b.predecessor)
+	public boolean compare(int a, int b){
+		if(vertices[a].predecessor == vertices[b].predecessor){
+			System.out.println("true");
 			return true;
-		else
+		}
+		else{
+			System.out.println("false");
 			return false;
+		}
 	}
 	
-	public void union(Vertex a, Vertex b){
-		if(getOrder(a) < getOrder(b))
-			b.predecessor = a.predecessor;
+	public void union(int a, int b){
+		if(getOrder(vertices[a]) < getOrder(vertices[b]))
+			vertices[b].predecessor = vertices[a].predecessor;
 		else
-			a.predecessor = b.predecessor;
+			vertices[a].predecessor = vertices[b].predecessor;
 	}
 	
 	public int getOrder(Vertex vertex){
@@ -33,6 +37,15 @@ public class DisjointSet {
 			vertex = vertex.predecessor;
 		}
 		return order;
+	}
+	
+	public static void main(String[] args){
+		DisjointSet set = new DisjointSet(4);
+		set.compare(0, 1);
+		set.compare(1, 2);
+		set.compare(0, 3);
+		set.union(1, 2);
+		set.compare(1, 2);
 	}
 
 	
