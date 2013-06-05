@@ -36,19 +36,30 @@ public class MaxHeap {
 		int currentPosition = vertices.size() -1;
 		Vertex auxVertex;
 		
-		while( (currentPosition != 1) && (vertices.get(currentPosition).currentCost > vertices.get(currentPosition/2).currentCost) ){
+		while( (currentPosition > 1) && (vertices.get(currentPosition).currentCost > vertices.get(currentPosition/2).currentCost) ){
 			auxVertex = vertices.get(currentPosition);
 			vertices.set(currentPosition, vertices.get(currentPosition/2));
 			vertices.set(currentPosition/2, auxVertex);
+			currentPosition = currentPosition/2;
 		}
 	}
 	
 	public static void main(String[] args){
 		MaxHeap hp = new MaxHeap();
 		hp.insert(1, 100);
+
 		hp.insert(2, 300);
+
 		hp.insert(3, 250);
-		System.out.println(hp.vertices.get(1).currentCost+" "+hp.vertices.get(2).currentCost+" "+hp.vertices.get(3).currentCost+" ");
+
+		hp.insert(4, 1000);
+
+		hp.insert(5, 500);
+		hp.insert(6, 254);
+		hp.insert(7, 15);
+		for(int i = 1; i < hp.vertices.size(); i++){
+			System.out.println(hp.vertices.get(i).currentCost);
+		}
 
 	}
 	
