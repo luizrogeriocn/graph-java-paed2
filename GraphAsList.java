@@ -38,17 +38,28 @@ public class GraphAsList {
 		Queue<Vertex> queue = new LinkedList<Vertex>();
 		queue.add(vertices[a]);
 		
+		vertices[a].predecessor = vertices[a];
+		
 		while(!queue.isEmpty()){
 			Vertex vertex = queue.poll();
 			
 			for(int i = 0; i < vertex.neighbors.size(); i++){
 				if( !vertex.neighbors.get(i).visited && !queue.contains(vertex.neighbors.get(i))){
 					queue.offer(vertex.neighbors.get(i));
+					vertex.neighbors.get(i).predecessor = vertex;
 					vertex.visited = true;
 					System.out.println("vertice adicionado a fila: " + vertex.neighbors.get(i).index + " i:"+i);
 				}
 			}	
 		}	
+	}
+	
+	public void printPath(Vertex vertex){
+		while(vertex.predecessor != vertex){
+			System.out.println(vertex.index);
+			vertex = vertex.predecessor;
+		}
+		System.out.println(vertex.index);
 	}
 	
 	
@@ -69,6 +80,7 @@ public class GraphAsList {
 			System.out.println(v[i].data);
 		}
 		grafo.bfs(0, 4);
+		grafo.printPath(grafo.vertices[4]);
 
 	}
 }
