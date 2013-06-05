@@ -1,28 +1,20 @@
+import java.util.LinkedList;
 
-public class Vertex {
-	protected int data;
-	protected boolean visited;
-	public Integer index = null;
-	public double distance = Double.POSITIVE_INFINITY;
-	public Vertex predecessor = null;
+
+public class Vertex{
+	public int data;
+	public LinkedList<Vertex> neighbors;
 	
-	public Vertex(int data){
-		this.data = data;
+	public Vertex(){
+		this.data = 1;
+		this.neighbors = new LinkedList<Vertex>();
 	}
 	
-	public boolean isVisited(){
-		return this.visited;
+	public Vertex[] getNeighbors(){
+		Vertex[] neighbors = new Vertex[this.neighbors.size()];
+		for( int i = 0; i < this.neighbors.size(); i++ ){
+			neighbors[i] = this.neighbors.get(i);
+		}
+		return neighbors;
 	}
-	
-	public void visit(){
-		this.visited = true;
-	}
-	
-	public void unvisit(){
-		this.visited = false;
-	}
-	
-	
-	
-	
 }
