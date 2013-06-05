@@ -33,12 +33,10 @@ public class MaxHeap {
 	}
 	
 	public void insertHelper(){
-		int currentPosition = vertices.size();
+		int currentPosition = vertices.size() -1;
 		Vertex auxVertex;
 		
-		while( (vertices.get(currentPosition).currentCost > vertices.get(currentPosition/2).currentCost) &&
-				currentPosition != 1)
-		{
+		while( (currentPosition != 1) && (vertices.get(currentPosition).currentCost > vertices.get(currentPosition/2).currentCost) ){
 			auxVertex = vertices.get(currentPosition);
 			vertices.set(currentPosition, vertices.get(currentPosition/2));
 			vertices.set(currentPosition/2, auxVertex);
@@ -46,8 +44,11 @@ public class MaxHeap {
 	}
 	
 	public static void main(String[] args){
-		//MaxHeap hp = new MaxHeap();
-		//hp.insert(1, 100)
+		MaxHeap hp = new MaxHeap();
+		hp.insert(1, 100);
+		hp.insert(2, 300);
+		hp.insert(3, 250);
+		System.out.println(hp.vertices.get(1).currentCost+" "+hp.vertices.get(2).currentCost+" "+hp.vertices.get(3).currentCost+" ");
 
 	}
 	
