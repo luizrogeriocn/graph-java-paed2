@@ -34,6 +34,15 @@ public class GraphAsList {
 		vertices[a].neighbors.add(vertices[b]);
 	}	
 	
+	public void unvisitAll(){
+		for(int i = 0; i < vertices.length; i++){
+			vertices[i].predecessor = null;
+			vertices[i].visited = false;
+			
+		}
+	}
+	
+	//shortest
 	public void bfs(int a){
 		
 		Queue<Vertex> queue = new LinkedList<Vertex>();
@@ -55,6 +64,7 @@ public class GraphAsList {
 		}	
 	}
 	
+	//path
 	public void dfs(int a){
 		
 		Stack<Vertex> stack = new Stack<Vertex>();
@@ -101,7 +111,8 @@ public class GraphAsList {
 		for(int i = 0; i < v.length; i++){
 			System.out.println(v[i].data);
 		}
-		//grafo.bfs(0);
+		grafo.bfs(0);
+		grafo.unvisitAll();
 		grafo.dfs(0);
 		grafo.printPath(grafo.vertices[4]);
 
