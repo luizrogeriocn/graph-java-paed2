@@ -10,7 +10,8 @@ public class DisjointSet {
 			vertices[i] = new Vertex();
 			vertices[i].predecessor = vertices[i];
 			vertices[i].currentCost = 1;
-		}		
+		}
+		System.out.println("-");
 	}
 	
 	public boolean compare(int a, int b){

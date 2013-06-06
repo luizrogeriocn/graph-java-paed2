@@ -1,13 +1,11 @@
 import java.util.Queue;
 import java.util.Stack;
-import java.util.Vector;
 import java.util.LinkedList;
 
 public class GraphAsList {
 	
 	protected Vertex[] vertices;
 	protected boolean isDirected = false;
-	protected Vector<Vertex> ver;
 	
 	public GraphAsList(int numerOfVertices){
 		this.vertices = new Vertex[numerOfVertices];
