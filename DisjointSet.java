@@ -28,14 +28,24 @@ public class DisjointSet {
 	public void union(int a, int b){
 		if(vertices[a].currentCost > vertices[b].currentCost){
 			vertices[b].predecessor = vertices[a].predecessor;
-			vertices[a].currentCost++;
 			vertices[b].currentCost++;
+			for(int i = 0; i < vertices.length; i++){
+				if(vertices[i].predecessor == vertices[b].predecessor){
+					vertices[i].predecessor = vertices[a].predecessor;
+					vertices[i].currentCost++;
+				}
+			}
 			System.out.println("-");
 		}
 		else{
 			vertices[a].predecessor = vertices[b].predecessor;
 			vertices[a].currentCost++;
-			vertices[b].currentCost++;
+			for(int i = 0; i < vertices.length; i++){
+				if(vertices[i].predecessor == vertices[a].predecessor){
+					vertices[i].predecessor = vertices[b].predecessor;
+					vertices[i].currentCost++;
+				}
+			}
 			System.out.println("-");
 		}
 			

@@ -52,16 +52,18 @@ public class GraphAsList {
 		
 		while(!queue.isEmpty()){
 			Vertex vertex = queue.poll();
+			vertex.visited = true;
 			
 			for(int i = 0; i < vertex.neighbors.size(); i++){
 				if( !vertex.neighbors.get(i).visited && !queue.contains(vertex.neighbors.get(i))){
 					queue.offer(vertex.neighbors.get(i));
 					vertex.neighbors.get(i).predecessor = vertex;
-					vertex.visited = true;
-					System.out.println("vertice adicionado a fila: " + vertex.neighbors.get(i).index + " i:"+i);
+					System.out.println("BFS - vertice adicionado a fila: " + vertex.neighbors.get(i).index + " i:"+i);
 				}
 			}	
-		}	
+		}
+		this.printPath(vertices[4]);
+		this.unvisitAll();
 	}
 	
 	//path
@@ -74,16 +76,18 @@ public class GraphAsList {
 		
 		while(!stack.isEmpty()){
 			Vertex vertex = stack.pop();
+			vertex.visited = true;
 			
 			for(int i = 0; i < vertex.neighbors.size(); i++){
 				if( !vertex.neighbors.get(i).visited && !stack.contains(vertex.neighbors.get(i))){
 					stack.push(vertex.neighbors.get(i));
 					vertex.neighbors.get(i).predecessor = vertex;
-					vertex.visited = true;
-					System.out.println("vertice adicionado a pilha: " + vertex.neighbors.get(i).index + " i:"+i);
+					System.out.println("DFS - vertice adicionado a pilha: " + vertex.neighbors.get(i).index + " i:"+i);
 				}
 			}	
-		}	
+		}
+		this.printPath(vertices[4]);
+		this.unvisitAll();
 	}
 	
 	public void printPath(Vertex vertex){
@@ -99,6 +103,7 @@ public class GraphAsList {
 	
 	public static void main(String[] args){
 		GraphAsList grafo = new GraphAsList(5);
+		
 		grafo.addEdge(0, 2);
 		grafo.addEdge(0, 1);
 		grafo.addEdge(0, 3);
@@ -107,14 +112,9 @@ public class GraphAsList {
 		grafo.addEdge(2, 4);
 		grafo.addEdge(2, 3);
 		grafo.addEdge(2, 0);
-		Vertex[] v = grafo.vertices[0].getNeighbors();
-		for(int i = 0; i < v.length; i++){
-			System.out.println(v[i].data);
-		}
+
 		grafo.bfs(0);
-		grafo.unvisitAll();
 		grafo.dfs(0);
-		grafo.printPath(grafo.vertices[4]);
 
 	}
 }

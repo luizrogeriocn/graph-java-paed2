@@ -14,10 +14,12 @@ public class MaxHeap {
 		Vertex vertex = new Vertex(id, chave);
 		this.vertices.add(vertex);
 		insertHelper();
+		System.out.println("-");
 	}
 	
 	public void extract(){
-		
+		 Vertex result = this.vertices.get(1);
+		 
 	}
 	
 	public void decrease(){
@@ -58,7 +60,7 @@ public class MaxHeap {
 		hp.insert(6, 254);
 		hp.insert(7, 15);
 		for(int i = 1; i < hp.vertices.size(); i++){
-			System.out.println(hp.vertices.get(i).currentCost);
+			//System.out.println(hp.vertices.get(i).currentCost);
 		}
 
 	}
