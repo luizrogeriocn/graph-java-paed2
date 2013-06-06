@@ -18,8 +18,7 @@ public class MaxHeap {
 	}
 	
 	public void extract(){
-		 Vertex result = this.vertices.get(1);
-		 
+		 Vertex result = this.vertices.get(1); 
 	}
 	
 	public void decrease(){
