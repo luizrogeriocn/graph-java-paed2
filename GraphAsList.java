@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Queue;
 import java.util.Stack;
 import java.util.LinkedList;
@@ -30,88 +34,94 @@ public class GraphAsList {
 	
 	public void addEdge(int a, int b){
 		vertices[a].neighbors.add(vertices[b]);
-	}	
+	}
+	
+	public void addEdge(int a, int b, int c){
+		vertices[a].neighbors.add(vertices[b]);
+		vertices[b].currentCost = c;
+	}
 	
 	public void unvisitAll(){
 		for(int i = 0; i < vertices.length; i++){
-			vertices[i].predecessor = null;
+			vertices[i].predecessor = vertices[i];
 			vertices[i].visited = false;	
 		}
 	}
 	
-	//shortest path
-	public void bfs(int a){
-		
+	/*
+	 * *****************************************************************************************
+	 *       ****************             shortest path                  ****************
+	 ******************************************************************************************* 
+	 */
+	public void bfs(int a, int b){	
 		Queue<Vertex> queue = new LinkedList<Vertex>();
 		queue.add(vertices[a]);
-		
-		vertices[a].predecessor = vertices[a];
 		
 		while(!queue.isEmpty()){
 			Vertex vertex = queue.poll();
 			vertex.visited = true;
 			
 			for(int i = 0; i < vertex.neighbors.size(); i++){
-				if( !vertex.neighbors.get(i).visited && !queue.contains(vertex.neighbors.get(i))){
-					queue.offer(vertex.neighbors.get(i));
-					vertex.neighbors.get(i).predecessor = vertex;
-					System.out.println("BFS - vertice adicionado a fila: " + vertex.neighbors.get(i).index + " i:"+i);
+				if( !vertex.getNeighbor(i).visited && !queue.contains(vertex.getNeighbor(i))){
+					queue.offer(vertex.getNeighbor(i));
+					vertex.getNeighbor(i).predecessor = vertex;
 				}
 			}	
 		}
-		this.printPath(vertices[4]);
 		this.unvisitAll();
 	}
 	
-	//any path
-	public void dfs(int a){
+	/*
+	 * *****************************************************************************************
+	 *       ****************                any path                  ****************
+	 ******************************************************************************************* 
+	 */
+	public void dfs(int a, int b){
 		
 		Stack<Vertex> stack = new Stack<Vertex>();
-		stack.push(vertices[a]);
+		stack.push(vertexAt(a));
 		
-		vertices[a].predecessor = vertices[a];
 		
 		while(!stack.isEmpty()){
 			Vertex vertex = stack.pop();
 			vertex.visited = true;
 			
 			for(int i = 0; i < vertex.neighbors.size(); i++){
-				if( !vertex.neighbors.get(i).visited && !stack.contains(vertex.neighbors.get(i))){
-					stack.push(vertex.neighbors.get(i));
-					vertex.neighbors.get(i).predecessor = vertex;
-					System.out.println("DFS - vertice adicionado a pilha: " + vertex.neighbors.get(i).index + " i:"+i);
+				if(!vertex.getNeighbor(i).visited && !stack.contains(vertex.getNeighbor(i))){
+					stack.push(vertex.getNeighbor(i));
+					vertex.getNeighbor(i).predecessor = vertex;	
 				}
 			}	
 		}
-		this.printPath(vertices[4]);
 		this.unvisitAll();
 	}
 	
-	public void printPath(Vertex vertex){
+	public Vertex vertexAt(int index){
+		return vertices[index];
+	}
+	
+	public void printPath(int index){
+		Vertex vertex = vertexAt(index);
 		while(vertex.predecessor != vertex){
-			System.out.println(vertex.index);
+			System.out.println(vertexAt(index).index+"->"+vertexAt(index).predecessor.index);
 			vertex = vertex.predecessor;
 		}
 		System.out.println(vertex.index);
 	}
 	
-	
-	
-	
-	public static void main(String[] args){
-		GraphAsList grafo = new GraphAsList(5);
+	public void prim(){
 		
-		grafo.addEdge(0, 2);
-		grafo.addEdge(0, 1);
-		grafo.addEdge(0, 3);
-		grafo.addEdge(1, 4);
-		grafo.addEdge(1, 2);
-		grafo.addEdge(2, 4);
-		grafo.addEdge(2, 3);
-		grafo.addEdge(2, 0);
+	}
 
-		grafo.bfs(0);
-		grafo.dfs(0);
+	public static void main(String[] args) throws IOException{
+		GraphAsList grafo = new GraphAsList(5);
+		grafo.addEdge(0, 1, 1);
+		grafo.addEdge(1, 2, 2);
+		grafo.addEdge(2, 3, 7);
+		grafo.addEdge(3, 4, 4);
 
+		//grafo.bfs(0, 4);
+		grafo.dfs(0, 4);
+	
 	}
 }
