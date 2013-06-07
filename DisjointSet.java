@@ -1,21 +1,43 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class DisjointSet {
-	
-	protected Vertex[] vertices;
-	
-	public DisjointSet(int n){
-		this.vertices = new Vertex[n];
-		
-		for(int i = 0; i < vertices.length; i++){
-			vertices[i] = new Vertex();
-			vertices[i].predecessor = vertices[i];
-			vertices[i].currentCost = 1;
+
+	protected Node[] sets;
+
+	public DisjointSet(int n) {
+		sets = new Node[n];
+		for(int i = 0; i < n; i++){
+			this.sets[i] = new Node(i);
 		}
 		System.out.println("-");
 	}
+
+	public void union(int a, int b){
+		a = findPredecessor(a);
+		b = findPredecessor(b);
+		
+		if(sets[a].cost > sets[b].cost){
+			sets[b].predecessor = a;
+			System.out.println("-");
+		}
+		else if(sets[a].cost < sets[b].cost){
+			sets[a].predecessor = b;	
+			System.out.println("-");
+		}
+		else{
+			sets[a].predecessor = b;
+			sets[b].cost++;
+			System.out.println("-");
+		}
+	}
 	
-	public boolean compare(int a, int b){
-		if(vertices[a].predecessor == vertices[b].predecessor){
+	public boolean compare(int a, int b) {
+		a = findPredecessor(a);
+		b = findPredecessor(b);
+		
+		if(a == b){
 			System.out.println("true");
 			return true;
 		}
@@ -25,58 +47,33 @@ public class DisjointSet {
 		}
 	}
 	
-	//uniao por ordenação e compressao de caminhos
-	public void union(int a, int b){
-		if(vertices[a].currentCost > vertices[b].currentCost){
-			vertices[b].predecessor = vertices[a].predecessor;
-			vertices[b].currentCost++;
-			for(int i = 0; i < vertices.length; i++){
-				if(vertices[i].predecessor == vertices[b].predecessor){
-					vertices[i].predecessor = vertices[a].predecessor;
-					vertices[i].currentCost++;
-				}
-			}
-			System.out.println("-");
+	private int findPredecessor(int index){
+		while(index != sets[index].predecessor){
+			index = sets[index].predecessor;
 		}
-		else{
-			vertices[a].predecessor = vertices[b].predecessor;
-			vertices[a].currentCost++;
-			for(int i = 0; i < vertices.length; i++){
-				if(vertices[i].predecessor == vertices[a].predecessor){
-					vertices[i].predecessor = vertices[b].predecessor;
-					vertices[i].currentCost++;
-				}
+		return index;
+	}
+
+	
+
+	public static void main(String[] args) throws IOException {
+		FileReader file = new FileReader("conjuntos2.in");
+		BufferedReader br = new BufferedReader(file);
+		String valores = br.readLine();
+		DisjointSet set = new DisjointSet(Integer.parseInt(valores));
+		while (br.ready()) {
+			valores = br.readLine();
+			String[] vSplited = valores.split(" ");
+			String type = vSplited[0];
+			String v1 = vSplited[1];
+			String v2 = vSplited[2];
+			if (type.equals("union")) {
+				set.union(Integer.parseInt(v1), Integer.parseInt(v2));
+			} else if (type.equals("compare")) {
+				set.compare(Integer.parseInt(v1), Integer.parseInt(v2));
 			}
-			System.out.println("-");
 		}
-			
+		file.close();
 	}
-	
-	public static void main(String[] args){
-		DisjointSet set = new DisjointSet(10);
-		set.union(0, 6);
-		set.compare(8, 7);
-		set.union(1, 8);
-		set.union(2, 2);
-		set.compare(2, 6);
-		set.compare(9, 3);
-		set.compare(4, 2);
-		set.union (1, 9);
-		set.compare(9, 5);
-		set.compare(4, 6);
-		set.union(5, 8);
-		set.union(6, 6);
-		set.union(7, 9);
-		set.union(0, 1);
-		set.compare(1, 5);
-		set.compare(0, 5);
-		set.compare(5, 1);
-		set.compare(1, 3);
-		set.union(2, 2);
-		set.compare(1, 8);
-		set.compare(5, 4);
-		set.compare(0, 2);
-		set.compare(0, 9);
-	}
-	
+
 }

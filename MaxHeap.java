@@ -1,6 +1,5 @@
 import java.util.Vector;
 
-
 public class MaxHeap {
 	
 	protected Vector<Vertex> vertices;
@@ -58,8 +57,9 @@ public class MaxHeap {
 		hp.insert(5, 500);
 		hp.insert(6, 254);
 		hp.insert(7, 15);
+		hp.insert(10, 14);
 		for(int i = 1; i < hp.vertices.size(); i++){
-			//System.out.println(hp.vertices.get(i).currentCost);
+			System.out.println(hp.vertices.get(i).currentCost);
 		}
 
 	}
