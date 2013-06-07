@@ -35,12 +35,11 @@ public class GraphAsList {
 	public void unvisitAll(){
 		for(int i = 0; i < vertices.length; i++){
 			vertices[i].predecessor = null;
-			vertices[i].visited = false;
-			
+			vertices[i].visited = false;	
 		}
 	}
 	
-	//shortest
+	//shortest path
 	public void bfs(int a){
 		
 		Queue<Vertex> queue = new LinkedList<Vertex>();
@@ -64,7 +63,7 @@ public class GraphAsList {
 		this.unvisitAll();
 	}
 	
-	//path
+	//any path
 	public void dfs(int a){
 		
 		Stack<Vertex> stack = new Stack<Vertex>();

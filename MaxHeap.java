@@ -3,8 +3,8 @@ import java.util.Vector;
 
 public class MaxHeap {
 	
-	public static Vector<Node> nodes;
-	public static int size;
+	public Vector<Node> nodes;
+	public int size;
 	
 	public MaxHeap(){
 		nodes = new Vector<Node>();
@@ -48,37 +48,39 @@ public class MaxHeap {
 	}
 	
 	public void goDown(int index){
-		int currentPos = index;
-		while(currentPos <= size/2){
+		if(index <= size/2){
+			int currentPos = index;
+			int posAux;
 			if(costAt(greaterChild(currentPos)) > costAt(currentPos)){
+				posAux = greaterChild(currentPos);
 				Collections.swap(nodes, currentPos, greaterChild(currentPos));
+				goDown(posAux);
 			}
-			currentPos = greaterChild(currentPos);
-		}	
+		}
 	}
 	
-	public static int rightChildCost(int index){
+	public int rightChildCost(int index){
 		if(size >= index*2 +1)
 			return costAt(index*2 +1);
 		else
-			return -1;
+			return -Integer.MAX_VALUE;
 	}
 	
-	public static int leftChildCost(int index){
+	public int leftChildCost(int index){
 		if(size >= index*2)
 			return costAt(index*2);
 		else
-			return -1;
+			return -Integer.MAX_VALUE;
 	}
 	
-	public static boolean hasChild(int index){
+	public boolean hasChild(int index){
 		if(size >= index*2)
 			return true;
 		else
 			return false;
 	}
 	
-	public static int greaterChild(int index){
+	public int greaterChild(int index){
 		int a = rightChildCost(index);
 		int b = leftChildCost(index);
 		if(a > b){
@@ -91,7 +93,7 @@ public class MaxHeap {
 		return index/2;
 	}
 	
-	public static int costAt(int index){
+	public int costAt(int index){
 		return nodes.get(index).cost;
 	}
 	
@@ -131,7 +133,7 @@ public class MaxHeap {
 		hp.insert(7, 15);
 		//hp.decrease(5, 302);
 		hp.extract();
-		for(int i = 1; i <= size; i++){
+		for(int i = 1; i <= hp.size; i++){
 			System.out.println(hp.nodes.get(i).cost);
 		}
 	}

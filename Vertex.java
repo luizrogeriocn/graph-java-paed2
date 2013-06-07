@@ -3,7 +3,6 @@ import java.util.LinkedList;
 
 public class Vertex{
 	public int index;
-	public int data;
 	public Vertex predecessor;
 	public int currentCost;
 	public boolean visited;
